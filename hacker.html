@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal: Mainframe Access</title>
+    <style>
+        /* Haqiqiy xakerlar terminali muhiti */
+        body {
+            background-color: #000;
+            color: #0f0; /* Yashil matn */
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            overflow: hidden; /* Skrol bo'lmasligi uchun */
+            user-select: none;
+        }
+        
+        #console {
+            width: 100%;
+            height: 90vh;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 18px;
+            line-height: 1.4;
+        }
+
+        /* Ko'rsatkich (Kursor) yonib-o'chishi uchun */
+        #cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: #0f0;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { background-color: #0f0; }
+            50%, 100% { background-color: transparent; }
+        }
+
+        /* Tarmoqqa buzib kirilgandagi ogohlantirish oynasi */
+        #access-denied {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #ff0000;
+            border: 3px solid #ff0000;
+            padding: 30px;
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 0 20px #ff0000;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body onkeydown="typeWriter(event)">
+
+<div id="console"></div><span id="cursor"></span>
+
+<div id="access-denied"> SYSTEM BREAK-IN: SUCCESSFUL<br>ACCESS GRANTED </div>
+
+<script>
+// Ekranda paydo bo'ladigan soxta kod
+const hackerCode = `
+#include <iostream>
+#include <remote_access.h>
+using namespace std;
+
+int main() {
+    string target = "NASA_MAIN_SERVER";
+    cout << "Connecting to: " << target << "..." << endl;
+    
+    if (bypassFirewall() && decryptRSA2048()) {
+        char* mainFrame = bypassSecurityProtocol();
+        injectTrojan(mainFrame);
+        
+        for(int i = 0; i <= 100; i += 20) {
+            cout << "Downloading database: " << i << "%" << endl;
+        }
+        
+        cout << "ROOT ACCESS ACQUIRED!" << endl;
+        return 0;
+    }
+    return -1;
+}
+
+// Initializing handshake...
+// Setting proxy: 127.0.0.1 -> 198.51.100.42
+// Cracking kernel memory blocks...
+// Overriding admin privileges...
+// Fetching secure tokens...
+// Clearing system event logs [OK]
+`;
+
+let index = 0;
+const speed = 4; // Har bir tugma bosilganda nechta harf chiqishi (kattaroq son = tezroq)
+const consoleDiv = document.getElementById('console');
+const accessDiv = document.getElementById('access-denied');
+
+function typeWriter(event) {
+    // Agar kod tugagan bo'lsa, "Ruxsat berildi" oynasini ochish
+    if (index >= hackerCode.length) {
+        accessDiv.style.display = "block";
+        return;
+    }
+
+    // Har qanday tugma bosilganda matndan belgilangan miqdorchasini kesib olib ekranga qo'shish
+    let currentSlice = hackerCode.slice(index, index + speed);
+    consoleDiv.innerHTML += currentSlice;
+    index += speed;
+
+    // Har doim sahifani pastga qarab avtomatik surib borish
+    window.scrollTo(0, document.body.scrollHeight);
+    
+    // Tugmaning asl vazifasini (masalan probel bossa sahifa pastga tushib ketishini) to'xtatish
+    event.preventDefault();
+}
+</script>
+
+</body>
+</html>
